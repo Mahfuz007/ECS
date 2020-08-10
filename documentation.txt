@@ -1,0 +1,9 @@
+It's a final project by ICE,RU Student
+
+-It follows MVC Design patter. PHP used as backend language. 
+-bootstrap 4.5 and semantic ui are used as UI
+-database parameters, site name are defined in config/config.php
+
+
+Problem to fix
+-fetching profile avatar
