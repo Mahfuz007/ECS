@@ -6,10 +6,17 @@
         <div class="col-9">
             <div class="container ui segment">
                 <h2>Create Problem</h2>
-                <form class="ui form error" autocomplete="off" action="<?php echo URLROOT;?>problems/create" method="POST">
+                <form class="ui form error" autocomplete="off" action="<?php echo URLROOT; ?>problems/create/<?php echo $data['examId'];?>/<?php echo $data["author"];?>" method="POST">
+
+                    <div>
+                      <?php  if (isset($_SERVER['HTTP_REFERER'])) {
+                            $previous = $_SERVER['HTTP_REFERER'];?>
+                            <input type="hidden" name="url" value="<?php echo $previous?>">
+                       <?php }?>
+                    </div>
                     <div class="required field">
                         <label for="name">Enter Problem Name:</label>
-                        <input type="text" name="name"value="<?php echo $data['name']; ?>" required>
+                        <input type="text" name="name" value="<?php echo $data['name']; ?>" required>
                     </div>
 
                     <div class="required field">
@@ -30,9 +37,9 @@
                 </form>
             </div>
         </div>
-        
+
         <!-- Right Side Bar -->
-        <?php include APPROOT . '/views/inc/rightSideBar.php';?>
+        <?php include APPROOT . '/views/inc/rightSideBar.php'; ?>
     </div>
 </div>
 
