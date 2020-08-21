@@ -73,4 +73,24 @@
             $data = $this->db->resultSet();
             return $data;
         }
+
+        //problem details
+        public function details($id){
+            $this->db->query('SELECT * from problem where id=:id');
+            $this->db->bind(':id',$id);
+            $data = $this->db->single();
+            return $data;
+        }
+
+        //update problem
+        public function update($id,$data){
+            $this->db->query('UPDATE problem SET name=:name,description=:description,inputcase=:input,outputcase=:output WHERE id=:id');
+            $this->db->bind(':name',$data['name']);
+            $this->db->bind(':description',$data['description']);
+            $this->db->bind(':input',$data['input']);
+            $this->db->bind(':output',$data['output']);
+            $this->db->bind(':id',$id);
+
+            $this->db->execute();
+        }
     }

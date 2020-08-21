@@ -175,4 +175,44 @@ class Problems extends Controller
             redirect('');
         }
     }
+
+    //update problem
+    public function update($id){
+        //submit updated problem information
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+            $data = [
+                "name" => trim($_POST['name']),
+                "description" => trim($_POST['description']),
+                "input" => trim($_POST['input']),
+                "output" => trim($_POST['output'])
+            ];
+
+            //store updated information
+            $this->userModel->update($id,$data);
+
+            //return back to the page from where we came here
+            if(isset($_POST['url'])) header("Loaction: ".$_POST['url']);
+            else redirect('');
+        }
+
+        //get problem details
+        $data = $this->userModel->details($id);
+
+        //Problem author authentication
+        if($data->author!=$_SESSION['id']){
+            setFlash('unauthorize','You are not allowed to view the page');
+            redirect('');
+        }
+
+        $problem = [
+            "id" => $data->id,
+            "name" => $data->name,
+            "description" => $data->description,
+            "input" => $data->inputcase,
+            "output" => $data->outputcase 
+        ];
+
+        //Load view
+        $this->view('problems/update',$problem);
+    }
 }
