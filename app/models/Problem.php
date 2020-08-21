@@ -63,4 +63,14 @@
             $data = $this->db->resultSet();
             return $data;
         }
+
+        //get exam details by id
+        public function getExam($id,$author){
+            $this->db->query('SELECT * from exam where id=:id and author=:author');
+            $this->db->bind(":id",$id);
+            $this->db->bind(":author",$author);
+
+            $data = $this->db->resultSet();
+            return $data;
+        }
     }

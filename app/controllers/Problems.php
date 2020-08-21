@@ -78,6 +78,16 @@ class Problems extends Controller
             ];
         }
 
+        //validate examid and author
+        $exam = $this->userModel->getExam($examId,$author);
+        if(empty($exam)){
+            redirect('');
+        }else if($author!=$_SESSION['id']){
+            //if current user isn't exam author then cann't create problem
+            setFlash('unauthorize','You are not allowed to view the page');
+            redirect('');
+        }
+
         //Load View
         $this->view('problems/create', $data);
     }
