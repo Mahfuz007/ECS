@@ -223,9 +223,7 @@ class Problems extends Controller
         $data = $this->userModel->details($id);
 
         if(empty($data)){
-            print_r($data);
-            die('success');
-            //redirect('');
+            redirect('');
         }
 
         //Problem author authentication
