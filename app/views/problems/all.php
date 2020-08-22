@@ -10,9 +10,9 @@
                     <div class="ui celled list">
                         <div class="item">
                             <div  class="shadow p-3">
-                                <a href="<?php echo URLROOT;?>problems/show/<?php echo $data->id;?>"><?php echo $data->id;?></a>
+                                <a target="_blank" href="<?php echo URLROOT;?>problems/show/<?php echo $data->id;?>"><?php echo $data->id;?></a>
                                 - 
-                                <a href="<?php echo URLROOT;?>problems/show/<?php echo $data->id;?>"><?php echo $data->name;?></a>
+                                <a target="_blank" href="<?php echo URLROOT;?>problems/show/<?php echo $data->id;?>"><?php echo $data->name;?></a>
                             </div>
                         </div>
                     </div>
