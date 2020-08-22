@@ -93,4 +93,11 @@
 
             $this->db->execute();
         }
+
+        //remove problem
+        public function delete($id){
+            $this->db->query('DELETE from problem where id=:id');
+            $this->db->bind(':id',$id);
+            $this->db->execute();
+        }
     }

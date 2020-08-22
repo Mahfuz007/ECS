@@ -215,4 +215,30 @@ class Problems extends Controller
         //Load view
         $this->view('problems/update',$problem);
     }
+
+    public function delete($id){
+        //get problem details
+        $data = $this->userModel->details($id);
+
+        if(empty($data)){
+            print_r($data);
+            die('success');
+            //redirect('');
+        }
+
+        //Problem author authentication
+        if($data->author!=$_SESSION['id']){
+            setFlash('unauthorize','You are not allowed to view the page');
+            redirect('');
+        }
+
+        //remove problem
+        $this->userModel->delete($id);
+
+        //redirect to source page
+        $previous = URLROOT;
+        if(isset($_SERVER['HTTP_REFERER'])) $previous = $_SERVER['HTTP_REFERER'];
+        
+        header('Location:'.$previous);
+    }
 }
