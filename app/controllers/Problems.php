@@ -191,7 +191,9 @@ class Problems extends Controller
             $this->userModel->update($id,$data);
 
             //return back to the page from where we came here
-            if(isset($_POST['url'])) header("Loaction: ".$_POST['url']);
+            if(isset($_POST['url'])){
+                header('Location:'.$_POST['url']);
+            }
             else redirect('');
         }
 
