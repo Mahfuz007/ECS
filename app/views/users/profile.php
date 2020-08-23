@@ -58,7 +58,7 @@
 
 
                     <div class="col ui small image">
-                        <img src="p<?php URLROOT ;?>avatar/avatar.jpg" width="100%" height="100%">
+                        <img src="p<?php URLROOT; ?>avatar/avatar.jpg" width="100%" height="100%">
                     </div>
                 </div>
 
@@ -88,35 +88,17 @@
                 }
                 ?>
 
-                <!-- Side panel for Office -->
-
-                <?php
-                if ($data->category == "Office") {
-                ?>
-
-                    <div class="col-md-3">
-                        <br>
-                        <a href="register.php">
-                            <span class="glyphicon glyphicon-check"></span> Register New data
-                        </a>
-                    </div>
-                <?php
-                }
-
-                ?>
-
                 <!-- Side panel for Teachers -->
 
                 <?php
                 if ($data->category == "Teacher") {
                 ?>
-
-                    <div class="col-md-3">
+                    <div class="t-panel">
+                        <a target="_blank" href="<?php echo URLROOT; ?>exams/all/<?php echo $data->id;?>" class="btn btn-primary"><i class="paper plane icon"></i>All Exams</a>
                         <br>
-                        <a href="register.php">
-                            <span class="glyphicon glyphicon-check"></span> Register New data
-                        </a>
+                        <a target="_blank" href="<?php echo URLROOT; ?>exams/create" class="btn btn-success"><i class="plus icon"></i>Create Exam</a>
                     </div>
+
                 <?php
                 }
 
@@ -125,8 +107,8 @@
         </div>
 
         <!-- right sidebar -->
-        <?php include APPROOT . '/views/inc/rightSideBar.php';?>
-        
+        <?php include APPROOT . '/views/inc/rightSideBar.php'; ?>
+
     </div>
 
 </div>
