@@ -50,4 +50,12 @@
             $name = $this->db->single();
             return $name;
         }
+
+        //get all exam by author
+        public function getAllExam($author){
+            $this->db->query('SELECT * from exam where author=:author');
+            $this->db->bind(':author',$author);
+            $exams = $this->db->resultSet();
+            return $exams;
+        }
     }

@@ -64,4 +64,20 @@
             //Load view
             $this->view('exams/show',$data);
         }
+
+        public function all($id){
+            //get all exam by the teacher
+            $data = $this->userModel->getAllExam($id);
+
+            //calculate exam ending time
+            foreach($data as $exam){
+                //extract duration hour and minutes
+                $end = explode(':',$exam->duration);
+                //add duration to start time
+                $exam->end = date('Y-m-d H:i:s',strtotime("+{$end[0]} hour +{$end[1]} minute",strtotime($exam->begin_time)));
+            }
+            
+            //Load view
+            $this->view('exams/all',$data);
+        }
     }
