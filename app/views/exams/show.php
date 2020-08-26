@@ -9,9 +9,28 @@
                 <h1 class="center">Exam Information</h1>
 
                 <!-- Exam details -->
-                <p><strong>Type: </strong><?php echo $data[sizeof($data) - 1]->type; ?></p>
+                <div class="row">
+                    <div class="col-10">
+                        <p><strong>Type: </strong><?php echo $data[sizeof($data) - 1]->type; ?></p>
+                    </div>
+                    <div class="col-2">
+
+                        <?php if($data[sizeof($data) - 1]->author==$_SESSION['id']){ ?>
+                            <a class="text-secondary" target="_blank" href="<?php URLROOT;?>exams/standing/<?php echo $data[sizeof($data) - 1]->id;?>"><strong>Standing</strong></a>
+                        <?php } ?>
+
+                    </div>
+                </div>
+
                 <p><strong>Title: </strong><?php echo $data[sizeof($data) - 1]->title; ?></p>
-                <p><strong>Date and Time: </strong><?php echo $data[sizeof($data) - 1]->begin_time; ?></p>
+
+                <p><strong>Date and Time: </strong><?php echo $data[sizeof($data) - 1]->begin_time; ?> <strong><span class="text-success"><?php echo (date("Y-m-d H:is")> $data[sizeof($data) - 1]->end)?"(Ended)":"";?></span></strong> 
+
+                <strong><span class="text-danger"><?php echo (date("Y-m-d H:is")<=$data[sizeof($data) - 1]->end && date("Y-m-d H:is")>=$data[sizeof($data) - 1]->begin_time)?"(Running)":"";?></span></strong> 
+            
+                </p>
+
+
                 <p><strong>Duration: </strong><?php echo $data[sizeof($data) - 1]->duration; ?></p>
                 <p><strong>Author: <a target="_blank" href="<?php echo URLROOT; ?>/users/profile/<?php echo $data[sizeof($data) - 1]->author; ?>"><?php echo $data[sizeof($data) - 1]->authorName; ?></a></strong></p>
                 
@@ -19,11 +38,16 @@
                 <!-- Display Problem Set -->
                 <h2 class="center">Problem Set</h2>
 
+                <?php $x ='A';?>
+
                 <?php for ($i = 0; $i < sizeof($data) - 1; $i++) { ?>
                     <div class="ui celled list">
                         <div class="item">
                             <div class="shadow p-3">
-                                <a target="_blank" href="<?php echo URLROOT; ?>problems/show/<?php echo $data[$i]->id; ?>"><?php echo $data[$i]->id; ?></a>
+
+                                <a href="<?php echo URLROOT; ?>problems/delete/<?php echo $data[$i]->id; ?>"><i class="trash alternate icon text-danger"></i></a>
+
+                                <a target="_blank" href="<?php echo URLROOT; ?>problems/show/<?php echo $data[$i]->id; ?>"><?php echo $x++;?></a>
                                 -
                                 <a target="_blank" href="<?php echo URLROOT; ?>problems/show/<?php echo $data[$i]->id; ?>"><?php echo $data[$i]->name; ?></a>
                             </div>

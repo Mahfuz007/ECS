@@ -56,6 +56,11 @@
             //get Exam author name
             $authorName = $this->userModel->getAuthor($exam->author);
             $exam->authorName = $authorName->name;
+
+            //extract duration hour and minutes
+            $end = explode(':',$exam->duration);
+            //add duration to start time
+            $exam->end = date('Y-m-d H:i:s',strtotime("+{$end[0]} hour +{$end[1]} minute",strtotime($exam->begin_time)));
             
             //push exam details at the end of exam problem set
             $len = sizeof($data);
