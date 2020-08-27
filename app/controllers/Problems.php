@@ -3,6 +3,10 @@ class Problems extends Controller
 {
     public function __construct()
     {
+        if(!isset($_SESSION['id'])){
+            setFlash("mustLoggedIn","You have to log in to view the page");
+            redirect('');
+        }
         $this->userModel = $this->model('Problem');
     }
 
