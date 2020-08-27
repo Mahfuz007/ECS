@@ -26,7 +26,9 @@
 
         //Fetch all problems
         public function all(){
-            $this->db->query('Select * from problem');
+            $now = date("Y-m-d H:i:s");
+            $this->db->query("SELECT problem.id as id, problem.name as name,problem.author as author from problem join exam on problem.examid = exam.id where exam.begin_time <= :date");
+            $this->db->bind(":date",$now);
             $data = $this->db->resultSet();
             return $data;
         }

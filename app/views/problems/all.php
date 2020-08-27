@@ -6,11 +6,12 @@
         <div class="col-9">
             <div class="container ui segment">
                 <h1 class="center">Showing All Problems</h1>
+                <?php $x = 1;?>
                 <?php foreach ($data as $data) { ?>
                     <div class="ui celled list">
                         <div class="item">
-                            <div  class="shadow p-3">
-                                <a target="_blank" href="<?php echo URLROOT;?>problems/show/<?php echo $data->id;?>"><?php echo $data->id;?></a>
+                            <div  class="shadow p-3" style="word-spacing:50px">
+                                <a target="_blank" href="<?php echo URLROOT;?>problems/show/<?php echo $data->id;?>"><?php echo $x++;?></a>
                                 - 
                                 <a target="_blank" href="<?php echo URLROOT;?>problems/show/<?php echo $data->id;?>"><?php echo $data->name;?></a>
                             </div>
