@@ -8,6 +8,12 @@
 
         //create new exam
         public function create(){
+            //check category. Only teachers can create exam
+            $user = $this->userModel->getCategory($_SESSION['id']);
+            if($user->category!="Teacher"){
+                setFlash('unauthorize',"You are not supposed to view that page");
+                redirect('');
+            }
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 $data =[

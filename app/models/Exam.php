@@ -58,4 +58,13 @@
             $exams = $this->db->resultSet();
             return $exams;
         }
+
+        //fetch user categroy
+        public function getCategory($id){
+            $this->db->query('SELECT category from user where id=:id');
+            $this->db->bind(":id",$id);
+            
+            $category = $this->db->single();
+            return $category;
+        }
     }
