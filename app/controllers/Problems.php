@@ -93,10 +93,18 @@ class Problems extends Controller
     }
 
     //Display single problem
-    public function show($id = 1)
+    public function show($id = 0)
     {
+        if($id==0){
+            $this->errors();
+        }
         $data = $this->userModel->show($id);
-        $this->view('problems/show', $data);
+        if(empty($data)){
+            $this->errors();
+        }
+        else{
+            $this->view('problems/show', $data);
+        } 
     }
 
     //Display all problems
