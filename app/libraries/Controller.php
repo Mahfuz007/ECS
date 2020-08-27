@@ -20,4 +20,9 @@
                 die('View does not exist');
             }
         }
+
+        //Load errors
+        public function errors(){
+            require_once '../app/views/inc/404.php';
+        }
     }
