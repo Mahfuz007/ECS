@@ -176,7 +176,9 @@
 
         public function profile($id){
             $data=$this->userModel->findById($id);
-            $this->view('users/profile',$data);
+            
+            if($data) $this->view('users/profile',$data);
+            else $this->errors();
         }
 
         public function logout(){
