@@ -58,7 +58,10 @@
 
 
                     <div class="col ui small image">
-                        <img src="p<?php URLROOT; ?>avatar/avatar.jpg" width="100%" height="100%">
+                        <img 
+                            src="<?php echo URLROOT;?>avatar/<?php echo $data->avatar ;?>"
+                            alt="profile image"
+                        >
                     </div>
                 </div>
 

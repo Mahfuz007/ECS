@@ -30,7 +30,7 @@
                         <div class="col-2">
 
                             <?php if ($data[sizeof($data) - 1]->author == $_SESSION['id']) { ?>
-                                <a class="text-secondary" target="_blank" href="<?php URLROOT; ?>exams/standing/<?php echo $data[sizeof($data) - 1]->id; ?>"><strong>Standing</strong></a>
+                                <a class="text-secondary" target="_blank" href="<?php echo URLROOT; ?>exams/standing/<?php echo $data[sizeof($data) - 1]->id; ?>"><strong>Standing</strong></a>
                             <?php } ?>
 
                         </div>

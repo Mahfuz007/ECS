@@ -53,6 +53,7 @@
                     'avatar-error'=>''
                 ];
 
+                
                 //Validate and Save Avatar
                 if(file_exists($_FILES['avatar']['tmp_name'])){
                     $fileName = $_FILES['avatar']['name'];
@@ -65,18 +66,21 @@
                     $fileExt = strtolower(end($fileExt));
                     $fileType = explode('/',$fileType)[0];
                     $allowed = array('jpeg','jpg','png');
-
+                    
                     if(in_array($fileExt,$allowed)){
                         if($fileType=='image'){
                             if($fileError==0){
                                 if($fileSize<=10204000){
                                     $fileName = $data['id'].'.'.$fileExt;
-                                    //Destination folder storing image.
-                                    //There is an problem . it will be fixed so soon
-                                    $fileDestination = APPROOT.'/avatar/'.$fileName;
                                     
-                                    move_uploaded_file($fileTempName,$fileDestination);
-                                    $data['avatar']='/avatar/'.$fileName;
+                                    $fileDestination = $_SERVER['DOCUMENT_ROOT'].'/ecs2/public/avatar/'.$fileName;
+                                    
+                                    if(move_uploaded_file($fileTempName,$fileDestination)){
+                                        $data['avatar']=$fileName;
+                                    }else{
+                                        $data['avatar-error'] = "Image Couldn't be uploaded";
+                                    }
+                                    
                                 }else{
                                     $data['avatar-error'] = 'Image size must be less than 10MB';
                                 }
@@ -177,7 +181,12 @@
         public function profile($id){
             $data=$this->userModel->findById($id);
             
-            if($data) $this->view('users/profile',$data);
+            if($data){
+                if(empty($data->avatar)){
+                    $data->avatar = "avatar.jpg";
+                }
+                $this->view('users/profile',$data);
+            }
             else $this->errors();
         }
 
