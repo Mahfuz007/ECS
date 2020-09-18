@@ -39,4 +39,18 @@
 
             return $this->db->single();
         }
+
+        public function findByEmail($email){
+            $this->db->query('SELECT * from user where email=:email');
+            $this->db->bind(':email',$email);
+
+            return $this->db->single();
+        }
+
+        public function findByPhone($phone){
+            $this->db->query('SELECT * from user where phone=:phone');
+            $this->db->bind(':phone',$phone);
+
+            return $this->db->single();
+        }
     }

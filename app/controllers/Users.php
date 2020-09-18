@@ -99,6 +99,9 @@
                 //validate Id
                 if(empty($data['id'])){
                     $data['id-error']="Please enter your valid id";
+                }else{
+                    $userId = $this->userModel->findById($data['id']);
+                    if($userId) $data['id-error']="ID already exists";
                 }
 
                 //Validate Name
@@ -109,11 +112,17 @@
                 //Validate Email
                 if(empty($data['email'])){
                     $data['email-error']='Please enter your email address';
+                }else{
+                    $userEmail = $this->userModel->findByEmail($data['email']);
+                    if($userEmail) $data['email-error']='Email Address already exists';
                 }
 
                 //Validate phone
                 if(empty($data['phone'])){
                     $data['phone-error']='Please enter your contact number';
+                }else{
+                    $userPhone = $this->userModel->findByPhone($data['phone']);
+                    if($userPhone) $data['phone-error']='Phone Number already exists';
                 }
 
                 //Validate password
