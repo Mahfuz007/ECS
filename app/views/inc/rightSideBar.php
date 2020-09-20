@@ -1,0 +1,5 @@
+<div class="col-3">
+    <div class="container-fluid ui segment">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad iusto voluptatibus laborum quod dolores minima. Illo voluptatem quam dolorem dolores voluptatibus! Eos neque minus distinctio exercitationem, accusantium sapiente earum cupiditate id maiores explicabo obcaecati asperiores velit veritatis quae porro ea necessitatibus doloremque illum voluptas fugiat placeat dolores! Aliquam voluptates cumque consequuntur sit error pariatur, culpa dolores atque magni praesentium, quaerat adipisci aperiam deserunt rem magnam consequatur. Animi earum quod iste! Ipsum iusto voluptate temporibus nemo consectetur, repudiandae illo est dolor, non optio laboriosam. In, necessitatibus ad! Tempora repellendus adipisci voluptas dignissimos similique rerum tenetur soluta sunt deserunt, blanditiis nihil. Molestiae.</p>
+    </div>
+</div>

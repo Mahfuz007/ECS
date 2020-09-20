@@ -1,0 +1,39 @@
+.liveValidateMessage {
+    transition: all .5s ease-out;
+    top: -6px;
+    position: absolute;
+    z-index: 1;
+    padding-top: 6px;
+    padding-bottom: 16px;
+    opacity: 0;
+    transform: translateY(100%)
+  }
+  
+  .liveValidateMessage--visible {
+    opacity: 1;
+    transform: translateY(0)
+  }
+
+  .center{
+    text-align: center;
+  }
+
+  .t-panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Timer */
+
+  .timer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    font-size: 1000%;
+  }
+  
