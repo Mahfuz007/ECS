@@ -189,7 +189,6 @@
 
         public function profile($id){
             $data=$this->userModel->findById($id);
-            
             if($data){
                 if(empty($data->avatar)){
                     $data->avatar = "avatar.jpg";

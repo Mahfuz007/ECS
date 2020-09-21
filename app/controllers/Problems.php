@@ -3,8 +3,8 @@ class Problems extends Controller
 {
     public function __construct()
     {
-        if(!isset($_SESSION['id'])){
-            setFlash("mustLoggedIn","You have to log in to view the page");
+        if (!isset($_SESSION['id'])) {
+            setFlash("mustLoggedIn", "You have to log in to view the page");
             redirect('');
         }
         $this->userModel = $this->model('Problem');
@@ -12,10 +12,10 @@ class Problems extends Controller
 
     public function create($examId = 0, $author = 0)
     {
-        if($examId==0 || $author==0){
+        if ($examId == 0 || $author == 0) {
             redirect('');
         }
-        
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Sanitize problem data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -59,10 +59,10 @@ class Problems extends Controller
                 $this->userModel->create($data);
 
                 $previous = '';
-                if(isset($_POST['url'])) $previous = $_POST['url'];
+                if (isset($_POST['url'])) $previous = $_POST['url'];
 
                 //return to origin location
-                header('Location:'. $previous);
+                header('Location:' . $previous);
             } else {
                 $this->view('problems/create', $data);
             }
@@ -83,12 +83,12 @@ class Problems extends Controller
         }
 
         //validate examid and author
-        $exam = $this->userModel->getExam($examId,$author);
-        if(empty($exam)){
+        $exam = $this->userModel->getExam($examId, $author);
+        if (empty($exam)) {
             redirect('');
-        }else if($author!=$_SESSION['id']){
+        } else if ($author != $_SESSION['id']) {
             //if current user isn't exam author then cann't create problem
-            setFlash('unauthorize','You are not allowed to view the page');
+            setFlash('unauthorize', 'You are not allowed to view the page');
             redirect('');
         }
 
@@ -99,16 +99,15 @@ class Problems extends Controller
     //Display single problem
     public function show($id = 0)
     {
-        if($id==0){
+        if ($id == 0) {
             $this->errors();
         }
         $data = $this->userModel->show($id);
-        if(empty($data)){
+        if (empty($data)) {
             $this->errors();
-        }
-        else{
+        } else {
             $this->view('problems/show', $data);
-        } 
+        }
     }
 
     //Display all problems
@@ -121,7 +120,29 @@ class Problems extends Controller
     //Submit problem
     public function submit($id = 0)
     {
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+            //fetch problem information
+            $data = $this->userModel->show($_POST['problem-id']);
+
+            //take new object data
+            $info = new stdClass();
+            $info->id = $_POST['problem-id'];
+            $info->code = $_POST['submit-code'];
+            $info->lang = $_POST['language'];
+            $info->inputCase = $_POST['inputtext'];
+            $info->name = "";
+            if(!empty($data)) $info->name = $data->name;
+            
+            //compile and run the code for custom test
+            $customTestData = $this->codeRun($info,"custom-test");
+            $customTestData->checked = "checked";
+
+            //re-render submit page for custom test
+            $this->view('problems/submit',$customTestData);
+        }
+        
         $data = $this->userModel->show($id);
+        //load view
         $this->view('problems/submit', $data);
     }
 
@@ -140,58 +161,21 @@ class Problems extends Controller
                 redirect('problems/submit');
             }
 
-            $lang = $_POST['language'];
-            global $code;
-            $code = $_POST['submit-code'];
-            global $check;
-            $check = 0;
+            $data->code = $_POST['submit-code'];
+            $data->lang = $_POST['language'];
 
-            //retrive testcase
-            $testCase = $this->userModel->testCase($data->id);
-            global $input;
-            $input = $testCase->inputcase;
-
-            global $compilationError;
-            $compilationError = false;
-            global $result;
-            
-            //include compilers
-            if ($lang == 'c') {
-                include APPROOT . '/compilers/c.php';
-            } else if ($lang == 'cpp') {
-                include APPROOT . '/compilers/cpp.php';
-            }
-
-            //Store Submitted Code
-            $submittedCode = [
-                "problemId" => $data->id,
-                "examId" => $data->examid,
-                "res" => $result,
-                "code" => $code,
-                "userId" => $_SESSION['id'],
-                "language" => $lang
-            ];
-
-            //store submitted code
-            $this->userModel->pushCode($submittedCode);
-
-            //fetch submission information
-            $info = $this->userModel->oneSubmission($data->id, $_SESSION['id']);
-
-            if ($result == "ACCEPTED") {
-                $this->view('problems/mysubmission', $info);
-            } else {
-                $this->view('problems/mysubmission', $info);
-            }
+            //compile and run code for problem submit
+            $this->codeRun($data, "submit-code");
         } else {
             redirect('');
         }
     }
 
     //update problem
-    public function update($id){
+    public function update($id)
+    {
         //submit updated problem information
-        if($_SERVER['REQUEST_METHOD']=='POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
                 "name" => trim($_POST['name']),
                 "description" => trim($_POST['description']),
@@ -200,21 +184,20 @@ class Problems extends Controller
             ];
 
             //store updated information
-            $this->userModel->update($id,$data);
+            $this->userModel->update($id, $data);
 
             //return back to the page from where we came here
-            if(isset($_POST['url'])){
-                header('Location:'.$_POST['url']);
-            }
-            else redirect('');
+            if (isset($_POST['url'])) {
+                header('Location:' . $_POST['url']);
+            } else redirect('');
         }
 
         //get problem details
         $data = $this->userModel->details($id);
 
         //Problem author authentication
-        if($data->author!=$_SESSION['id']){
-            setFlash('unauthorize','You are not allowed to view the page');
+        if ($data->author != $_SESSION['id']) {
+            setFlash('unauthorize', 'You are not allowed to view the page');
             redirect('');
         }
 
@@ -223,24 +206,25 @@ class Problems extends Controller
             "name" => $data->name,
             "description" => $data->description,
             "input" => $data->inputcase,
-            "output" => $data->outputcase 
+            "output" => $data->outputcase
         ];
 
         //Load view
-        $this->view('problems/update',$problem);
+        $this->view('problems/update', $problem);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         //get problem details
         $data = $this->userModel->details($id);
 
-        if(empty($data)){
+        if (empty($data)) {
             redirect('');
         }
 
         //Problem author authentication
-        if($data->author!=$_SESSION['id']){
-            setFlash('unauthorize','You are not allowed to view the page');
+        if ($data->author != $_SESSION['id']) {
+            setFlash('unauthorize', 'You are not allowed to view the page');
             redirect('');
         }
 
@@ -249,8 +233,75 @@ class Problems extends Controller
 
         //redirect to source page
         $previous = URLROOT;
-        if(isset($_SERVER['HTTP_REFERER'])) $previous = $_SERVER['HTTP_REFERER'];
-        
-        header('Location:'.$previous);
+        if (isset($_SERVER['HTTP_REFERER'])) $previous = $_SERVER['HTTP_REFERER'];
+
+        header('Location:' . $previous);
+    }
+
+    //Final problem submit section
+    public function finalSubmit($data)
+    {
+        //Store Submitted Code
+        $submittedCode = [
+            "problemId" => $data->id,
+            "examId" => $data->examId,
+            "res" => $data->result,
+            "code" => $data->code,
+            "userId" => $_SESSION['id'],
+            "language" => $data->lang
+        ];
+
+        //store submitted code
+        $this->userModel->pushCode($submittedCode);
+
+        //fetch submission information
+        $info = $this->userModel->oneSubmission($data->id, $_SESSION['id']);
+        $this->view('problems/mysubmission', $info);
+    }
+
+    //Compile and run the code
+    public function codeRun($data, $from)
+    {
+        $lang = $data->lang;
+        global $code;
+        $code = $data->code;
+        global $check;
+        $check = 0;
+
+        //retrive testcase
+        if($from == "submit-code") $testCase = $this->userModel->testCase($data->id);
+        global $input;
+
+        if ($from == "custom-test"){
+            $input = $data->inputCase;
+            $check = -1;
+        }
+        else $input = $testCase->inputcase;
+
+        global $compilationError;
+        $compilationError = false;
+        global $result;
+
+        //include compilers
+        if ($lang == 'c') {
+            include APPROOT . '/compilers/c.php';
+        } else if ($lang == 'cpp') {
+            include APPROOT . '/compilers/cpp.php';
+        }
+        $info = new stdClass();
+        $info->id = $data->id;
+        $info ->code = $code;
+        $info->lang = $lang;
+
+        if ($from == "submit-code") {
+            $info->examId = $data->examid;
+            $info->result = $result;
+            $this->finalSubmit($info);
+        } else {
+            $info->input = $input;
+            $info->output = $output;
+            $info ->name = $data->name;
+            return $info;
+        }
     }
 }
