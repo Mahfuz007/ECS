@@ -37,7 +37,6 @@
                     </div>
 
                     <p><strong>Title: </strong><?php echo $data[sizeof($data) - 1]->title; ?></p>
-
                     <p><strong>Date and Time: </strong><?php echo $data[sizeof($data) - 1]->begin_time; ?> <strong><span class="text-success"><?php echo (date("Y-m-d H:is") > $data[sizeof($data) - 1]->end) ? "(Ended)" : ""; ?></span></strong>
 
                         <strong><span class="text-danger"><?php echo (date("Y-m-d H:is") <= $data[sizeof($data) - 1]->end && date("Y-m-d H:is") >= $data[sizeof($data) - 1]->begin_time) ? "(Running)" : ""; ?></span></strong>

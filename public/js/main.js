@@ -1,5 +1,4 @@
 
-// Selectors
 let examTime = document.querySelector('[name="_time"]').value;
 const customTest = document.getElementById('custom-test');
 

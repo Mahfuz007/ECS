@@ -5,7 +5,6 @@
             $this->db = new Database();
         }
 
-        //store exam details
         public function create($data){
             $this->db->query('INSERT INTO exam(type,title,begin_time,duration,author) values(:type,:title,:begin_time,:duration,:author)');
             $this->db->bind(':type',$data['type']);
@@ -67,4 +66,94 @@
             $category = $this->db->single();
             return $category;
         }
+
+        public function getSubmission($userid, $problemid, $examid)
+        {
+            $this->db->query(" SELECT id, date, userid, problemid, language, res FROM submission WHERE userid=:userid and problemid=:problemid and examid=:examid order by id desc; ");
+            $this->db->bind(":userid",$userid);
+            $this->db->bind(":problemid",$problemid);
+            $this->db->bind(":examid",$examid);
+
+            return $this->db->resultSet();
+        }
+
+        //Calculate how many users participate in the contest.
+        private function calTotalUser($examid)
+        {
+            $sql = "SELECT DISTINCT userid FROM submission WHERE examid = '$examid' ORDER BY userid ASC ;";
+            $this->db->query($sql);
+            return $this->db->resultSet();
+        }
+
+        //Calculate how many problems are there in the contest
+        public function calTotalProblem($examid)
+        {
+            $sql = "SELECT * FROM problem WHERE examid = '$examid';";
+            $this->db->query($sql);
+            return $this->db->resultSet();
+        }
+
+        //Calculate verdict depending on the userid and problemid
+        private function calVerdict($problemid, $userid, $examid)
+        {
+            $sql = " SELECT res FROM  submission WHERE examid = '$examid' AND problemid = '$problemid' AND userid = '$userid';";
+            $this->db->query($sql);
+            $allverdict = $this->db->resultSet();
+            $verdict = NULL;
+            if(count($allverdict) != 0)
+            {
+                $mark = 0;
+                foreach($allverdict as $key => $value)//Search there is any correct solution.
+                {
+                    if($value->res == "ACCEPTED")
+                    {
+                        $mark = 1;
+                        break;
+                    }
+                }
+                if($mark == 1)
+                {
+                    $verdict = "Accepted";
+                }
+                else
+                {
+                    $verdict = "Wrong Answer";
+                }
+            }
+            return $verdict;  
+        }
+
+        //calculate Standing table
+        private function calStandingTable($totalproblem, $totaluser, $examid)
+        {
+            $problemname = [];
+            $standingtable = [];
+            foreach($totalproblem as $key => $value) // This is for result's first row.
+            {
+                array_push($problemname,[$value->name, $value->id, $examid]);
+            }
+            $standingtable["User ID"] = $problemname;
+            foreach($totaluser as $key => $value)
+            {
+                $userid = $value->userid;
+                $verdict = [];
+                foreach($totalproblem as $key1 => $value1)//Calculate userid's verdict for each problem 
+                {
+                    $problemid = $value1->id;
+                    array_push($verdict, [$this->calVerdict($problemid, $userid, $examid),$problemid, $examid]);
+                }
+                $standingtable[$userid] = $verdict; //Store userid's verdict to the result table. 
+            }
+            return $standingtable;
+        }
+
+        public function getStanding($examid)
+        {
+            $totaluser = $this->calTotalUser($examid);
+            $totalproblem = $this->calTotalProblem($examid);
+            $standingtable = $this->calStandingTable($totalproblem, $totaluser, $examid);
+            return $standingtable;
+        }
+
+        
     }

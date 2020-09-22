@@ -6,7 +6,6 @@
             $this->userModel = $this->model('Exam');
         }
 
-        //create new exam
         public function create(){
             //check category. Only teachers can create exam
             $user = $this->userModel->getCategory($_SESSION['id']);
@@ -90,5 +89,19 @@
             
             //Load view
             $this->view('exams/all',$data);
+        }
+
+        public function standing($examid)
+        {
+            //$totalproblem = $this->userModel->calTotalProblem($examid);
+            $standingtable = $this->userModel->getStanding($examid);
+
+            $this->view('exams/standing', $standingtable);
+        }
+
+        public function submission($userid, $problemid, $examid)
+        {
+            $sub = $this->userModel->getSubmission($userid, $problemid, $examid);
+            $this->view('exams/submission', $sub);
         }
     }

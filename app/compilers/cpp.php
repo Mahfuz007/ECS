@@ -1,12 +1,12 @@
 <?php
-putenv("PATH=C:\Program Files (x86)\CodeBlocks\MinGW\bin");
+putenv("PATH=C:\Program Files\CodeBlocks\MinGW\bin");
 $CC = "g++";
-$out = APPROOT."/compilers/a.exe";
+$out = "a.exe";
 
-$filename_code = APPROOT."/compilers/main.cpp";
-$filename_in = APPROOT."/compilers/input.txt";
-$filename_error = APPROOT."/compilers/error.txt";
-$executable = APPROOT."/compilers/a.exe";
+$filename_code = "main.cpp";
+$filename_in = "input.txt";
+$filename_error = "error.txt";
+$executable = "a.exe";
 $command = $CC . " -lm " . $filename_code;
 $command_error = $command . " 2>" . $filename_error; //writting error
 
@@ -43,7 +43,9 @@ if (trim($error) == "") {
 if ($check == 0)
 {
     //compare output
-    if (strcmp($output, $testCase->outputcase)==0) {
+    $output = trim($output);
+    $databaseoutput = str_replace("\r",'',$testCase->outputcase);
+    if (strcmp($output, $databaseoutput)==0) {
         $result = "ACCEPTED";
     } else {
         $result = "WRONG ANSWER";

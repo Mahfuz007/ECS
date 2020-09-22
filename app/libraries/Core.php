@@ -11,7 +11,6 @@
 
         public function __construct(){
             $url = $this->getUrl();
-
             if(isset($_GET['url'])){
                 //Look in Controller 'Pages loaded';rs for first value
                 if(file_exists('../app/controllers/'. ucwords($url[0]) .'.php')){
