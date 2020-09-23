@@ -77,6 +77,14 @@
             return $this->db->resultSet();
         }
 
+        public function getUserCode($submissionid)
+        {
+            $this->db->query(" SELECT * FROM submission where id=:submissionid; ");
+            $this->db->bind(":submissionid", $submissionid);
+
+            return $this->db->single();
+        }
+
         //Calculate how many users participate in the contest.
         private function calTotalUser($examid)
         {

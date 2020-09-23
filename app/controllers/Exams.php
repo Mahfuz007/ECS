@@ -107,4 +107,10 @@
             $sub = $this->userModel->getSubmission($userid, $problemid, $examid);
             $this->view('exams/submission', $sub);
         }
+
+        public function showcode($submissionid)
+        {
+            $usercode = $this->userModel->getUserCode($submissionid);
+            $this->view('exams/showcode',$usercode);
+        }
     }

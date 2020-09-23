@@ -18,7 +18,7 @@
                     {
                     ?>
                         <tr>
-                            <td><a href="#"><?php echo $value->id; ?></a></td>
+                        <td><a href="<?php echo URLROOT;?>/exams/showcode/<?php echo $value->id;?>"><?php echo $value->id; ?></a></td>
                             <td><?php echo $value->date; ?></td>
                             <td><?php echo $value->userid; ?></td>
                             <td><?php echo $value->problemid; ?></td>
