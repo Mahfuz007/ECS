@@ -2,6 +2,9 @@
     class Exams extends Controller{
         public function __construct()
         {
+            if(!isset($_SESSION['id'])){
+                redirect('');
+            }
             date_default_timezone_set('Asia/Dhaka');
             $this->userModel = $this->model('Exam');
         }
