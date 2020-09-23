@@ -102,4 +102,14 @@
             $this->db->bind(':id',$id);
             $this->db->execute();
         }
+
+        //fetch Last submitted code
+        public function lastSubmitCode($pid, $userId){
+            $this->db->query('SELECT * from submission where problemId=:pid and userId=:userId order by date desc');
+            $this->db->bind(':pid',$pid);
+            $this->db->bind(':userId',$userId);
+            
+            $data = $this->db->single();
+            return $data;
+        }
     }

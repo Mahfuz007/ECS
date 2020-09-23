@@ -29,7 +29,7 @@ flash('failed', 'alert alert-danger');
                             <option <?php if (!empty($data->lang) && $data->lang == 'cpp') echo "selected"; ?> value="cpp">C++</option>
                         </select>
                         <label for="">Please Write Your Source Code</label>
-                        <textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="submit-code" rows="15" cols="70"><?php echo (!empty($data->code) ? $data->code : ""); ?></textarea>
+                        <textarea oncopy="return false" onpaste="return false" oncut="return false" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="submit-code" rows="15" cols="70"><?php echo (!empty($data->code) ? $data->code : ""); ?></textarea>
                         <!-- oncopy="return false" onpaste="return false" oncut="return false" -->
 
                     </div>

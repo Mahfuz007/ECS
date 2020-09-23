@@ -142,6 +142,15 @@ class Problems extends Controller
         }
         
         $data = $this->userModel->show($id);
+        
+        //fetch previous submitted source code
+        if($data){
+            $lastCode = $this->userModel->lastSubmitCode($id,$_SESSION['id']);
+            if($lastCode){
+                $data->code = $lastCode->code;
+                $data->lang = $lastCode->language;
+            }
+        }
         //load view
         $this->view('problems/submit', $data);
     }
