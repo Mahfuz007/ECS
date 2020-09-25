@@ -81,7 +81,7 @@
         public function all($id){
             //get all exam by the teacher
             $data = $this->userModel->getAllExam($id);
-
+        
             //calculate exam ending time
             foreach($data as $exam){
                 //extract duration hour and minutes
@@ -112,5 +112,26 @@
         {
             $usercode = $this->userModel->getUserCode($submissionid);
             $this->view('exams/showcode',$usercode);
+        }
+
+        public function update($examId){
+            $data = $this->userModel->getInfo($examId);
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+                if($data->author!=$_SESSION['id']){
+                    redirect('');
+                }
+
+                $exam =[
+                    'type' => trim($_POST['type']),
+                    'title' => trim($_POST['title']),
+                    'time' => trim($_POST['time']),
+                    'duration' => trim($_POST['duration']),
+                    'id' => $examId
+                ];
+
+                $this->userModel->update($exam);
+                redirect('exams/show/'. $examId);
+            }
+            $this->view('exams/update',$data);
         }
     }

@@ -163,5 +163,16 @@
             return $standingtable;
         }
 
+        public function update($exam){
+            $this->db->query('UPDATE exam SET type=:type,title=:title,begin_time=:time, duration=:duration where id=:id');
+
+            $this->db->bind(':type',$exam['type']);
+            $this->db->bind(':title',$exam['title']);
+            $this->db->bind(':time',$exam['time']);
+            $this->db->bind(':duration',$exam['duration']);
+            $this->db->bind(':id',$exam['id']);
+
+            $this->db->execute();
+        }
         
     }
