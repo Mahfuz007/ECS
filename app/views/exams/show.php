@@ -39,8 +39,20 @@
                     <p><strong>Title: </strong><?php echo $data[sizeof($data) - 1]->title; ?></p>
                     <p><strong>Date and Time: </strong><?php echo $data[sizeof($data) - 1]->begin_time; ?> <strong><span class="text-success"><?php echo (date("Y-m-d H:is") > $data[sizeof($data) - 1]->end) ? "(Ended)" : ""; ?></span></strong>
 
-                        <strong><span class="text-danger"><?php echo (date("Y-m-d H:is") <= $data[sizeof($data) - 1]->end && date("Y-m-d H:is") >= $data[sizeof($data) - 1]->begin_time) ? "(Running)" : ""; ?></span></strong>
 
+
+                        <?php if ((date("Y-m-d H:is") <= $data[sizeof($data) - 1]->end && date("Y-m-d H:is") >= $data[sizeof($data) - 1]->begin_time)) { ?>
+                            <span class="text-danger rem_time">
+                                <span>(Remaining</span>
+                                <span class="text-danger" id="h">00</span>
+                                :
+                                <span class="text-danger" id="m">00</span>
+                                :
+                                <span class="text-danger" id="s">00</span>
+                                <span class="text-danger">)</span>
+                            </span>
+                            <input type="hidden" name="_end" value="<?php echo strtotime($data[sizeof($data) - 1]->end); ?>">
+                        <?php } ?>
                     </p>
 
 
@@ -50,7 +62,7 @@
                             <p><strong>Author: <a target="_blank" href="<?php echo URLROOT; ?>users/profile/<?php echo $data[sizeof($data) - 1]->author; ?>"><?php echo $data[sizeof($data) - 1]->authorName; ?></a></strong></p>
                         </div>
                         <div class="col-2">
-                            <a style="display: <?php ($_SESSION['id']!=$data[sizeof($data) - 1])?"none":"";?>" href="<?php echo URLROOT;?>exams/update/<?php echo $data[sizeof($data) - 1]->id;?>"><i class="sync icon"></i></a>
+                            <a style="display: <?php ($_SESSION['id'] != $data[sizeof($data) - 1]) ? "none" : ""; ?>" href="<?php echo URLROOT; ?>exams/update/<?php echo $data[sizeof($data) - 1]->id; ?>"><i class="sync icon"></i></a>
                         </div>
 
                     </div>
@@ -67,8 +79,9 @@
                         <div class="ui celled list">
                             <div class="item">
                                 <div class="shadow p-3">
-
-                                    <a style="display: <?php ($_SESSION['id']!=$data[sizeof($data) - 1])?"none":"";?>" href="<?php echo URLROOT; ?>problems/delete/<?php echo $data[$i]->id; ?>"><i class="trash alternate icon text-danger"></i></a>
+                                    <?php if ($_SESSION['id'] == $data[sizeof($data) - 1]->author) { ?>
+                                        <a href="<?php echo URLROOT; ?>problems/delete/<?php echo $data[$i]->id; ?>"><i class="trash alternate icon text-danger"></i></a>
+                                    <?php } ?>
 
                                     <a target="_blank" href="<?php echo URLROOT; ?>problems/show/<?php echo $data[$i]->id; ?>"><?php echo $x++; ?></a>
                                     -
