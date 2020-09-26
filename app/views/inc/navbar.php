@@ -34,7 +34,10 @@
                 <input class="form-control mr-sm-2" name="pass" type="password" placeholder="Password" aria-label="Password">
 
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign In</button>
+                <br>
             </form>
+            
+            <a class="btn btn-outline-success my-2 my-sm-0" href="<?php echo URLROOT;?>users/register">Sign Up</a>
         <?php endif; ?>
 
     </div>
