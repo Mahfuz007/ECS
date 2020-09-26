@@ -40,4 +40,11 @@
 .shadow{
   box-shadow: 0px 18px 53px 0px rgba(0, 0,0, 0.3);
 }
+
+#main-footer{
+  text-align: center;
+  background: #444;
+  color: #f4f4f4;
+  padding: 10px;
+}
   
