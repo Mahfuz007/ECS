@@ -4,7 +4,7 @@
   define('APPROOT', dirname(dirname(__FILE__)));
 
   //URL Root
-  define('URLROOT','http://localhost:8080/ecs/');
+  define('URLROOT','http://localhost/ecs/');
 
   //Site Name
   define('SITENAME','Exam Control System');
@@ -13,4 +13,4 @@
   define('DB_HOST','localhost');
   define('DB_USER','root');
   define('DB_PASS','');
-  define('DB_NAME','examcontrol');
+  define('DB_NAME','hello');
