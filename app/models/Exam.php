@@ -69,10 +69,12 @@
 
         public function getSubmission($userid, $problemid, $examid)
         {
-            $this->db->query(" SELECT id, date, userid, problemid, language, res FROM submission WHERE userid=:userid and problemid=:problemid and examid=:examid order by id desc; ");
+            $endingtime = $this->getExamEndingTime($examid);
+            $this->db->query(" SELECT id, date, userid, problemid, language, res FROM submission WHERE userid=:userid AND problemid=:problemid AND examid=:examid AND date<=:endtime ORDER BY id DESC; ");
             $this->db->bind(":userid",$userid);
             $this->db->bind(":problemid",$problemid);
             $this->db->bind(":examid",$examid);
+            $this->db->bind(":endtime",$endingtime);
 
             return $this->db->resultSet();
         }
@@ -85,10 +87,44 @@
             return $this->db->single();
         }
 
+        //Calculate exam ending time.
+        private function getExamEndingTime($examid)
+        {
+            $sql = " SELECT begin_time, duration FROM exam where id = '$examid' ";
+            $this->db->query($sql);
+            $result = $this->db->single();
+            $starttime = $result->begin_time;
+            $duration = $result->duration;
+            $hour = "0";
+            $minute = "0";
+            $mark = 0;
+            for($i = 0; $i < strlen($duration); $i++)
+            {
+                if($duration[$i] == ':')
+                {
+                    $mark = 1;
+                    continue;
+                }
+                if($mark == 0)
+                {
+                    $hour = $hour.$duration[$i];
+                }
+                else
+                {
+                    $minute = $minute.$duration[$i];
+                }
+            }
+            $hour = intval($hour);
+            $minute = intval($minute);
+            $endingtime = date('Y-m-d H:i:s', strtotime("+$hour hour +$minute minutes", strtotime($starttime)));
+            return $endingtime;
+        }
+
         //Calculate how many users participate in the contest.
         private function calTotalUser($examid)
         {
-            $sql = "SELECT DISTINCT userid FROM submission WHERE examid = '$examid' ORDER BY userid ASC ;";
+            $endingtime = $this->getExamEndingTime($examid);
+            $sql = "SELECT DISTINCT userid FROM submission WHERE examid = '$examid' AND date <= '$endingtime' ORDER BY LEFT(userid, 2), RIGHT(userid, 2) ASC ;";
             $this->db->query($sql);
             return $this->db->resultSet();
         }
@@ -104,9 +140,11 @@
         //Calculate verdict depending on the userid and problemid
         private function calVerdict($problemid, $userid, $examid)
         {
-            $sql = " SELECT res FROM  submission WHERE examid = '$examid' AND problemid = '$problemid' AND userid = '$userid';";
+            $endingtime = $this->getExamEndingTime($examid);
+            $sql = " SELECT res FROM  submission WHERE examid = '$examid' AND problemid = '$problemid' AND userid = '$userid' AND date <= '$endingtime' ;";
             $this->db->query($sql);
             $allverdict = $this->db->resultSet();
+            
             $verdict = NULL;
             if(count($allverdict) != 0)
             {

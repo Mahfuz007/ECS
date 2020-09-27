@@ -78,7 +78,8 @@
                     <div class="col-md-3">
                         <div class="panel panel-info" style="margin: 1em;">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Participated Exam</h3>
+                                <!-- <h3 class="panel-title">Participated Exam</h3> -->
+                                <p style="font-size: 17px;" class="panel-title"> <strong> Participated Exam </strong></p>
 
                             </div>
                             <div class="panel-body">

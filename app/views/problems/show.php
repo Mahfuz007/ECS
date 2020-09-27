@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <p>Author: <a href="<?php echo URLROOT;?>users/profile/<?php echo $data->userid;?>"><?php echo $data->author ;?></a></p>
-                <p><?php echo $data->description;?></p>
+                <pre><p><?php echo $data->description;?></p></pre>
                 <a class="ui primary button center" href="<?php echo URLROOT;?>problems/submit/<?php echo $data->id;?>">Submit</a>
             </div>
         </div>
