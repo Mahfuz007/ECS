@@ -4,7 +4,7 @@
     <div class="row">
         <!-- Main Part -->
         <div class="col-9">
-
+            <input type="hidden" name="_end" value="<?php echo strtotime($data[sizeof($data) - 1]->end); ?>">
             <?php if ($_SESSION['id'] != $data[sizeof($data) - 1]->author && date("Y-m-d H:i:s") < $data[sizeof($data) - 1]->begin_time) { ?>
                 <div class="container ui segment">
                     <div class="timer">
@@ -51,9 +51,9 @@
                                 <span class="text-danger" id="s">00</span>
                                 <span class="text-danger">)</span>
                             </span>
-                            <input type="hidden" name="_end" value="<?php echo strtotime($data[sizeof($data) - 1]->end); ?>">
                         <?php } ?>
                     </p>
+
 
 
                     <p><strong>Duration: </strong><?php echo $data[sizeof($data) - 1]->duration; ?></p>
@@ -62,13 +62,14 @@
                             <p><strong>Author: <a target="_blank" href="<?php echo URLROOT; ?>users/profile/<?php echo $data[sizeof($data) - 1]->author; ?>"><?php echo $data[sizeof($data) - 1]->authorName; ?></a></strong></p>
                         </div>
                         <div class="col-2">
-                            <a style="display: <?php ($_SESSION['id'] != $data[sizeof($data) - 1]) ? "none" : ""; ?>" href="<?php echo URLROOT; ?>exams/update/<?php echo $data[sizeof($data) - 1]->id; ?>"><i class="sync icon"></i></a>
+                            <?php if ($_SESSION['id'] == $data[sizeof($data) - 1]->author) { ?>
+                                <a href="<?php echo URLROOT; ?>exams/update/<?php echo $data[sizeof($data) - 1]->id; ?>"><i class="sync icon"></i>Update</a>
+                            <?php } ?>
                         </div>
 
                     </div>
 
                     <input type="hidden" name="_time" value="<?php echo null ?>">
-
 
                     <!-- Display Problem Set -->
                     <h2 class="center">Problem Set</h2>

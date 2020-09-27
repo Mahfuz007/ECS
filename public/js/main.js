@@ -1,15 +1,15 @@
 
-let examTime = document.querySelector('[name="_time"]').value;
+let examTime = document.querySelector('[name="_time"]').value*1000;
 const customTest = document.getElementById('custom-test');
-let endTime = document.querySelector('[name="_end"]').value;
+let endTime = document.querySelector('[name="_end"]').value * 1000;
+let now = new Date().getTime();
 
 
 //events
-if (examTime) {
-    examTime *= 1000;
+if (now<examTime) {
     CountDown();
 }
-if(endTime){
+if (now>= examTime*1000 && now<= endTime) {
     remTime();
 }
 
@@ -19,7 +19,7 @@ function addCustomTest() {
     const customField = document.getElementById('custom-field');
     if (customField.style.display == "none") customField.style.display = "block";
     else customField.style.display = "none";
-    window.scrollTo(0,document.body.scrollHeight);
+    window.scrollTo(0, document.body.scrollHeight);
 }
 
 function CountDown() {
@@ -44,8 +44,7 @@ function CountDown() {
     }, 1000);
 }
 
-function remTime(){
-        endTime*=1000;
+function remTime() {
         var endtimer = setInterval(() => {
 
         var curr1 = new Date().getTime();
