@@ -5,19 +5,20 @@
         }
 
         public function create($data){
-            $this->db->query("INSERT into problem(name,author,examid,description,inputcase,outputcase) values(:name,:author,:examid,:description,:inputcase,:outputcase)");
+            $this->db->query("INSERT into problem(name,author,examid,description,inputcase,outputcase,marks) values(:name,:author,:examid,:description,:inputcase,:outputcase,:marks)");
             $this->db->bind(':name',$data['name']);
             $this->db->bind(':author',$data['author']);
             $this->db->bind(':examid',$data['examId']);
             $this->db->bind(':description',$data['description']);
             $this->db->bind(':inputcase',$data['input']);
             $this->db->bind(':outputcase',$data['output']);
+            $this->db->bind(':marks', $data['marks']);
             $this->db->execute();
         }
 
         //Fetch single proble with problem id
         public function show($id){
-            $this->db->query("SELECT problem.id,problem.name,problem.examid,user.name as author,problem.description,user.id as userid from problem join user on problem.author = user.id where  problem.id=:id");
+            $this->db->query("SELECT problem.marks,problem.id,problem.name,problem.examid,user.name as author,problem.description,user.id as userid from problem join user on problem.author = user.id where  problem.id=:id");
             $this->db->bind(':id',$id);
 
             $data = $this->db->single();
@@ -86,12 +87,13 @@
 
         //update problem
         public function update($id,$data){
-            $this->db->query('UPDATE problem SET name=:name,description=:description,inputcase=:input,outputcase=:output WHERE id=:id');
+            $this->db->query('UPDATE problem SET name=:name,description=:description,inputcase=:input,outputcase=:output,marks=:marks WHERE id=:id');
             $this->db->bind(':name',$data['name']);
             $this->db->bind(':description',$data['description']);
             $this->db->bind(':input',$data['input']);
             $this->db->bind(':output',$data['output']);
             $this->db->bind(':id',$id);
+            $this->db->bind(':marks',$data['marks']);
 
             $this->db->execute();
         }

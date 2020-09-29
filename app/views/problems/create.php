@@ -18,6 +18,10 @@
                         <label for="name">Enter Problem Name:</label>
                         <input type="text" name="name" value="<?php echo $data['name']; ?>" required>
                     </div>
+                    <div class="required field">
+                        <label for="marks">Enter Problem Marks:</label>
+                        <input type="text" name="marks" value="<?php echo $data['marks']; ?>" required>
+                    </div>
 
                     <div class="required field">
                         <label for="problem-description">Enter Problem Description:</label>

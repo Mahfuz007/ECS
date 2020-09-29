@@ -26,10 +26,12 @@ class Problems extends Controller
                 "output" => trim($_POST['output-case']),
                 "author" => $author,
                 "examId" => $examId,
+                "marks" => trim(($_POST['marks'])),
                 "name_error" => '',
                 "description_error" => '',
                 "input_error" => '',
-                "output_error" => ''
+                "output_error" => '',
+                "marks_error" => ''
             ];
 
             //check name field is empty or not.
@@ -52,8 +54,14 @@ class Problems extends Controller
                 $data['output_error'] = "Please Enter Output test cases";
             }
 
+            //Check marks field
+            if (empty($data['marks'])) {
+                $data['marks_error'] = "Please Enter Problem Marks";
+            }
+
+
             //if no field is empty then pass data to model
-            if (empty($data['input_error']) && empty($data['output_error']) && empty($data['name_error']) && empty($data['description_error'])) {
+            if (empty($data['marks_error']) && empty($data['input_error']) && empty($data['output_error']) && empty($data['name_error']) && empty($data['description_error'])) {
 
                 //store problem data
                 $this->userModel->create($data);
@@ -75,10 +83,12 @@ class Problems extends Controller
                 "description" => '',
                 "input" => '',
                 "output" => '',
+                "marks" => '',
                 "name_error" => '',
                 "description_error" => '',
                 "input_error" => '',
-                "output_error" => ''
+                "output_error" => '',
+                "marks_error" => ''
             ];
         }
 
@@ -120,7 +130,7 @@ class Problems extends Controller
     //Submit problem
     public function submit($id = 0)
     {
-        if($_SERVER['REQUEST_METHOD']=='POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //fetch problem information
             $data = $this->userModel->show($_POST['problem-id']);
 
@@ -131,22 +141,22 @@ class Problems extends Controller
             $info->lang = $_POST['language'];
             $info->inputCase = $_POST['inputtext'];
             $info->name = "";
-            if(!empty($data)) $info->name = $data->name;
-            
+            if (!empty($data)) $info->name = $data->name;
+
             //compile and run the code for custom test
-            $customTestData = $this->codeRun($info,"custom-test");
+            $customTestData = $this->codeRun($info, "custom-test");
             $customTestData->checked = "checked";
 
             //re-render submit page for custom test
-            $this->view('problems/submit',$customTestData);
+            $this->view('problems/submit', $customTestData);
         }
-        
+
         $data = $this->userModel->show($id);
-        
+
         //fetch previous submitted source code
-        if($data){
-            $lastCode = $this->userModel->lastSubmitCode($id,$_SESSION['id']);
-            if($lastCode){
+        if ($data) {
+            $lastCode = $this->userModel->lastSubmitCode($id, $_SESSION['id']);
+            if ($lastCode) {
                 $data->code = $lastCode->code;
                 $data->lang = $lastCode->language;
             }
@@ -189,7 +199,8 @@ class Problems extends Controller
                 "name" => trim($_POST['name']),
                 "description" => trim($_POST['description']),
                 "input" => trim($_POST['input']),
-                "output" => trim($_POST['output'])
+                "output" => trim($_POST['output']),
+                "marks" => trim($_POST['marks'])
             ];
 
             //store updated information
@@ -215,7 +226,8 @@ class Problems extends Controller
             "name" => $data->name,
             "description" => $data->description,
             "input" => $data->inputcase,
-            "output" => $data->outputcase
+            "output" => $data->outputcase,
+            "marks" => $data->marks
         ];
 
         //Load view
@@ -278,14 +290,13 @@ class Problems extends Controller
         $check = 0;
 
         //retrive testcase
-        if($from == "submit-code") $testCase = $this->userModel->testCase($data->id);
+        if ($from == "submit-code") $testCase = $this->userModel->testCase($data->id);
         global $input;
 
-        if ($from == "custom-test"){
+        if ($from == "custom-test") {
             $input = $data->inputCase;
             $check = -1;
-        }
-        else $input = $testCase->inputcase;
+        } else $input = $testCase->inputcase;
 
         global $compilationError;
         $compilationError = false;
@@ -299,7 +310,7 @@ class Problems extends Controller
         }
         $info = new stdClass();
         $info->id = $data->id;
-        $info ->code = $code;
+        $info->code = $code;
         $info->lang = $lang;
 
         if ($from == "submit-code") {
@@ -309,7 +320,7 @@ class Problems extends Controller
         } else {
             $info->input = $input;
             $info->output = $output;
-            $info ->name = $data->name;
+            $info->name = $data->name;
             return $info;
         }
     }
