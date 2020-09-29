@@ -9,9 +9,6 @@
                 <a class="nav-link" href="<?php echo URLROOT;?>problems/all">Archives</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Custom Test</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="<?php echo URLROOT . 'pages/about'; ?>">About</a>
             </li>
         </ul>

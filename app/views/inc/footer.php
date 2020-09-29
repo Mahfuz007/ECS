@@ -1,6 +1,6 @@
 <footer id="main-footer" class="bg-dark text-center py1">
     <div class="container">
-        <p>Copyright &copy; 2020 , Exam Controll System, All right reserved.   Developed By <a href="https://www.linkedin.com/in/abdullah-al-mahfuz-48b90015b/">Mahfuz</a> and <a href="#">Debasish</a></p>
+        <p>Copyright &copy; 2020 , Exam Control System, All right reserved.   Developed By <a href="https://www.linkedin.com/in/abdullah-al-mahfuz-48b90015b/">Mahfuz</a> and <a href="#">Debasish</a></p>
         
     </div>
 </footer>

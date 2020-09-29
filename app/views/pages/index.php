@@ -15,8 +15,8 @@ flash('login-failed', 'alert alert-danger');
                 <h1> <?php echo $data['title']; ?> </h1>
                 <div class="ui stacked segment">
 
-                    <h1 class="display-4">Exam Controll System</h1>
-                    <p>It is an online based exam control system for the Dept. of Information Communication Engineering Department.</p>
+                    <h1 class="display-4">Exam Control System</h1>
+                    <p>It is an online-based exam control system for the Department of Information Communication Engineering.</p>
                 </div>
 
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -33,7 +33,7 @@ flash('login-failed', 'alert alert-danger');
                             <img class="d-block w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOLJaY1YTm9yeykuwJqLxdmOpuk_MjIUUX7A&usqp=CAU" alt="Second slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="d-block w-100" src="https://lh3.googleusercontent.com/proxy/Sbg3M3bo5y0tmBk5fSpINb6o0TcZSvwd6mvbkgWf8fahwnJqyvbQjCSV_3xaqELQfqNSXkBLgeWGzNZ01yNdeHGlXnnvka_YQS5UVVCrhjJhKUGCxnkqXjkHbgBhI6o" alt="Third slide" >
+                            <img class="d-block w-100" src="https://bangladeshus.com/wp-content/uploads/2019/08/rajshahi-university-review-f.jpg" alt="Third slide" >
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
