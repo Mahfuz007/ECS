@@ -299,7 +299,7 @@ class Problems extends Controller
         } else $input = $testCase->inputcase;
 
         global $compilationError;
-        $compilationError = false;
+        $compilationError = "";
         global $result;
 
         //include compilers
@@ -312,10 +312,15 @@ class Problems extends Controller
         $info->id = $data->id;
         $info->code = $code;
         $info->lang = $lang;
+        
+        //if compilation error found
+        if($check==1){
+            $info->error = $compilationError;
+        }
 
         if ($from == "submit-code") {
             $info->examId = $data->examid;
-            $info->result = $result;
+            $info->result = "Compilation Error";
             $this->finalSubmit($info);
         } else {
             $info->input = $input;

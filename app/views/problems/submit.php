@@ -1,8 +1,13 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 <?php
 flash('invalid-id', 'alert alert-danger');
-flash('failed', 'alert alert-danger');
-; ?>
+?>
+
+<?php if(!empty($data->error)){ ?>
+    <div class="alert alert-danger">
+        <?php echo $data->error;?>
+    </div>
+<?php } ?>
 
 <div class="container-lg">
     <div class="row">
