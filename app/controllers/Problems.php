@@ -320,7 +320,7 @@ class Problems extends Controller
 
         if ($from == "submit-code") {
             $info->examId = $data->examid;
-            $info->result = "Compilation Error";
+            $info->result = $result;
             $this->finalSubmit($info);
         } else {
             $info->input = $input;

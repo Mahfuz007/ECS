@@ -36,8 +36,7 @@ if (trim($error) == "") {
 } else {
     $check = 1;
     $compilationError = $error;
-    setFlash('failed', '<strong>Compilation Error Or Submit Failed!</strong>');
-    redirect('problems/submit');
+    $result = "Compilation Error";
 }
 
 if ($check == 0)

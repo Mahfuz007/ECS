@@ -33,12 +33,11 @@ if (trim($error) == "") {
 } else if (!strpos($error, "error")) {
     $out = $out . " < " . $filename_in;
     $output = shell_exec($out);
-    $compilationError = "Succes";
+    $compilationError = "Success";
 } else {
     $check = 1;
     $compilationError = $error;
-    setFlash('failed', '<strong>Compilation Error Or Submit Failed!</strong>');
-    redirect('problems/submit');
+    $result = "Compilation Error";
 }
 
 if ($check == 0)
