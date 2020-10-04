@@ -144,8 +144,13 @@
             $sql = " SELECT res FROM  submission WHERE examid = '$examid' AND problemid = '$problemid' AND userid = '$userid' AND date <= '$endingtime' ;";
             $this->db->query($sql);
             $allverdict = $this->db->resultSet();
+
+            $sql = " SELECT marks from problem where id='$problemid'; ";
+            $this->db->query($sql);
+            $problemscore = $this->db->single();
             
             $verdict = NULL;
+            $score = 0;
             if(count($allverdict) != 0)
             {
                 $mark = 0;
@@ -160,13 +165,15 @@
                 if($mark == 1)
                 {
                     $verdict = "Accepted";
+                    $score = $problemscore->marks;
                 }
                 else
                 {
                     $verdict = "Wrong Answer";
                 }
             }
-            return $verdict;  
+            // return $verdict;  
+            return [$verdict, $score];  
         }
 
         //calculate Standing table

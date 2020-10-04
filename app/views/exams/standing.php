@@ -11,34 +11,49 @@
                 foreach ($data as $key => $value)
                 {
                     echo "<tr>";
-                    echo "<td>" . $key . "</td>";
+                    echo "<td><strong>" . $key . "</strong></td>";
+
+                    $totalscore = 0;
                     foreach ($value as $verdict)
                     {
                         if ($firstrowmark == 0)
                         {
-                            echo "<td>" . $verdict[0] . "</td>";
+                            echo "<td><strong>" . $verdict[0] . "</strong></td>";
                         }
                         else
                         {
                             //echo "<td><a href=\"#\">" . $verdict[0] . "</a></td>";
-                            if ($verdict[0] == "Accepted")
+                            if ($verdict[0][0] == "Accepted")
                             {
-                                echo "<td> <a class=\"text-secondary\" target=\"_blank\" href=\" " . URLROOT . "exams/submission/" . $key . "/" . $verdict[1] . "/" . $verdict[2] . " \"><p style=\"color:green;\"><strong>" . $verdict[0] . "</strong></p></a> </td>";
+                                echo "<td> <a class=\"text-secondary\" target=\"_blank\" href=\" " . URLROOT . "exams/submission/" . $key . "/" . $verdict[1] . "/" . $verdict[2] . " \"><p style=\"color:green;\"><strong>" . $verdict[0][0] ." (". $verdict[0][1].")" . "</strong></p></a> </td>";
+                                $totalscore += $verdict[0][1];
                             }
-                            else
+                            else if($verdict[0][0] == "Wrong Answer")
                             {
-                                echo "<td> <a class=\"text-secondary\" target=\"_blank\" href=\" " . URLROOT . "exams/submission/" . $key . "/" . $verdict[1] . "/" . $verdict[2] . " \"><p style=\"color:red;\"><strong>" . $verdict[0] . "</strong></p></a> </td>";
+                                echo "<td> <a class=\"text-secondary\" target=\"_blank\" href=\" " . URLROOT . "exams/submission/" . $key . "/" . $verdict[1] . "/" . $verdict[2] . " \"><p style=\"color:red;\"><strong>" .  $verdict[0][0] ." (". $verdict[0][1].")" . "</strong></p></a> </td>";
+                            }
+                            else 
+                            {
+                                echo "<td></td>";
                             }
 
                         }
 
+                    }
+                    if($firstrowmark == 0)
+                    {
+                       echo "<td><strong>Total Marks</strong></td>";
+                    }
+                    else
+                    {
+                        echo "<td><strong>". $totalscore."</strong></td>";
                     }
                     $firstrowmark = 1;
                     echo "</tr>";
                 }
                 echo "</table>";
                 // echo "<pre>";
-                // //print_r($data);
+                // print_r($data);
                 // echo "</pre>"
              ?>
         </div>

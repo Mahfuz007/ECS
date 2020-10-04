@@ -308,6 +308,9 @@ class Problems extends Controller
         } else if ($lang == 'cpp') {
             include APPROOT . '/compilers/cpp.php';
         }
+        else if($lang == 'java'){
+            include APPROOT . '/compilers/java.php';
+        }
         $info = new stdClass();
         $info->id = $data->id;
         $info->code = $code;

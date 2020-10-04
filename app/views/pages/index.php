@@ -12,10 +12,10 @@ flash('login-failed', 'alert alert-danger');
         <!-- Main Part -->
         <div class="col-9">
             <div class="ui conatiner segment">
-                <h1> <?php echo $data['title']; ?> </h1>
+                <h4> <?php echo $data['title']; ?> </h4>
                 <div class="ui stacked segment">
 
-                    <h1 class="display-4">Exam Control System</h1>
+                    <h1 class="display-4">Laboratory Examination Control System</h1>
                     <p>It is an online-based exam control system for the Department of Information Communication Engineering.</p>
                 </div>
 

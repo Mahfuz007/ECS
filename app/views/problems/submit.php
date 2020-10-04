@@ -32,6 +32,7 @@ flash('invalid-id', 'alert alert-danger');
                         <select class="form-control" name="language" required>
                             <option <?php if (!empty($data->lang) && $data->lang == 'c') echo "selected"; ?> value="c">C</option>
                             <option <?php if (!empty($data->lang) && $data->lang == 'cpp') echo "selected"; ?> value="cpp">C++</option>
+                            <option <?php if (!empty($data->lang) && $data->lang == 'java') echo "selected"; ?> value="java">JAVA</option>
                         </select>
                         <label for="">Please Write Your Source Code</label>
                         <textarea oncopy="return false" onpaste="return false" oncut="return false" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" name="submit-code" rows="15" cols="70"><?php echo (!empty($data->code) ? $data->code : ""); ?></textarea>
