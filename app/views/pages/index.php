@@ -15,7 +15,7 @@ flash('login-failed', 'alert alert-danger');
                 <h4> <?php echo $data['title']; ?> </h4>
                 <div class="ui stacked segment">
 
-                    <h1 class="display-4">Laboratory Examination Control System</h1>
+                    <h1 class="display-4">Exam Controll System</h1>
                     <p>It is an online-based exam control system for the Department of Information Communication Engineering.</p>
                 </div>
 

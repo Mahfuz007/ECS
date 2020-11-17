@@ -13,6 +13,16 @@
                         <span class="" id="minutes">00</span>
                         :
                         <span class="" id="seconds">00</span>
+
+                    </div>
+                    <div class="center">
+                        <?php if ($data[sizeof($data) - 1]->confirm == -1) { ?>
+                            <a class="btn btn-success" href="<?php echo URLROOT; ?>/exams/register/<?php echo $data[sizeof($data) - 1]->id; ?>">register</a>
+                        <?php } else if ($data[sizeof($data) - 1]->confirm == 0) { ?>
+                            <button disabled="disabled">Pending</button>
+                        <?php } else { ?>
+                            <button class="btn btn-success" disabled="disabled">registed</button>
+                        <?php } ?>
                     </div>
                     <input type="hidden" name="_time" value="<?php echo strtotime($data[sizeof($data) - 1]->begin_time); ?>">
                 </div>
@@ -37,26 +47,36 @@
                     </div>
 
                     <p><strong>Title: </strong><?php echo $data[sizeof($data) - 1]->title; ?></p>
-                    <p><strong>Date and Time: </strong><?php echo $data[sizeof($data) - 1]->begin_time; ?> <strong><span class="text-success"><?php echo (date("Y-m-d H:is") > $data[sizeof($data) - 1]->end) ? "(Ended)" : ""; ?></span></strong>
+
+                    <div class="row">
+                        <div class="col-10">
+                            <p><strong>Date and Time: </strong><?php echo $data[sizeof($data) - 1]->begin_time; ?> <strong><span class="text-success"><?php echo (date("Y-m-d H:is") > $data[sizeof($data) - 1]->end) ? "(Ended)" : ""; ?></span></strong>
 
 
 
-                        <?php if ((date("Y-m-d H:is") <= $data[sizeof($data) - 1]->end && date("Y-m-d H:is") >= $data[sizeof($data) - 1]->begin_time)) { ?>
-                            <span class="text-danger rem_time">
-                                <span>(Remaining</span>
-                                <span class="text-danger" id="h">00</span>
-                                :
-                                <span class="text-danger" id="m">00</span>
-                                :
-                                <span class="text-danger" id="s">00</span>
-                                <span class="text-danger">)</span>
-                            </span>
-                        <?php } ?>
-                    </p>
-
-
+                                <?php if ((date("Y-m-d H:is") <= $data[sizeof($data) - 1]->end && date("Y-m-d H:is") >= $data[sizeof($data) - 1]->begin_time)) { ?>
+                                    <span class="text-danger rem_time">
+                                        <span>(Remaining</span>
+                                        <span class="text-danger" id="h">00</span>
+                                        :
+                                        <span class="text-danger" id="m">00</span>
+                                        :
+                                        <span class="text-danger" id="s">00</span>
+                                        <span class="text-danger">)</span>
+                                    </span>
+                                <?php } ?>
+                            </p>
+                        </div>
+                        <div class="col-2">
+                            <?php if ($_SESSION['id'] == $data[sizeof($data) - 1]->author) { ?>
+                                <a href="<?php echo URLROOT; ?>exams/review/<?php echo $data[sizeof($data) - 1]->id; ?>">Review</a>
+                            <?php } ?>
+                        </div>
+                    </div>
 
                     <p><strong>Duration: </strong><?php echo $data[sizeof($data) - 1]->duration; ?></p>
+
+
                     <div class="row">
                         <div class="col-10">
                             <p><strong>Author: <a target="_blank" href="<?php echo URLROOT; ?>users/profile/<?php echo $data[sizeof($data) - 1]->author; ?>"><?php echo $data[sizeof($data) - 1]->authorName; ?></a></strong></p>

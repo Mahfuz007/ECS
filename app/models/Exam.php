@@ -219,5 +219,45 @@
 
             $this->db->execute();
         }
+
+        //get exam registration comfimation
+        public function getExamConfirm($sid, $eid){
+            $this->db->query('SELECT confirm from examReg where studentid=:sid and examid=:eid');
+            $this->db->bind(':sid',$sid);
+            $this->db->bind(':eid',$eid);
+
+            return $this->db->single();
+        }
+
+        //exam primary register
+        public function register($sid,$eid){
+            $this->db->query("INSERT into examReg(examid,studentid) values(:eid,:sid)");
+            $this->db->bind(':eid',$eid);
+            $this->db->bind(':sid',$sid);
+            $this->db->execute();
+        }
+
+        //fetch register student's for exam
+        public function review($eid){
+            $this->db->query('SELECT * FROM examReg where examid=:eid and confirm=0');
+            $this->db->bind(':eid',$eid);
+            return $this->db->resultSet();
+        }
+
+        //accept exam registration
+        public function acceptReg($sid,$eid){
+            $this->db->query('UPDATE examReg SET confirm=1 where examid=:eid and studentid=:sid');
+            $this->db->bind(':sid',$sid);
+            $this->db->bind(':eid',$eid);
+            $this->db->execute();
+        }
+
+        //reject exam registration
+        public function rejectReg($sid,$eid){
+            $this->db->query('DELETE from examReg where examid=:eid and studentid=:sid');
+            $this->db->bind(':sid',$sid);
+            $this->db->bind(':eid',$eid);
+            $this->db->execute();
+        }
         
     }
